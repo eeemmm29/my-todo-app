@@ -1,20 +1,22 @@
+import { useState, useEffect } from "react";
 import Todo from "./components/Todo";
+import "./App.css";
 
 function App() {
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        width: "100vw",
+  const [todos, setTodos] = useState(() => {
+    const savedTodos = localStorage.getItem("todos");
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  });
 
-        position: "absolute",
-        top: 0,
-        padding: "10px" /* Optional: for spacing */,
-        overflow: "auto",
-      }}
-    >
+  // Save todos to local storage whenever they change
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
+  // Add other functions like addTodo, editTodo, etc.
+
+  return (
+    <div className="app">
       <Todo heading="TO DO" />
     </div>
   );
